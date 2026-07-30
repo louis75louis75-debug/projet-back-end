@@ -13,7 +13,8 @@ module.exports = async (req, res) => {
     if (!user) return res.status(200).json({ error: false, message: msgSuccess })
 
     const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '15m' })
-    const link = `http://localhost:3000/reset-password?token=${token}`
+    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000'
+const link = `${frontendUrl}/forgot-password?token=${token}`;
     
     await sendEmail(
       user.email, 
